@@ -1010,7 +1010,6 @@ int main(int argc, char *argv[])
       case '-':
         m_player_audio.SetCurrentVolume(m_player_audio.GetCurrentVolume() - 300);
         printf("Current Volume: %.2fdB\n", m_player_audio.GetCurrentVolume() / 100.0f);
-        break;
       case '+': case '=':
         m_player_audio.SetCurrentVolume(m_player_audio.GetCurrentVolume() + 300);
         printf("Current Volume: %.2fdB\n", m_player_audio.GetCurrentVolume() / 100.0f);
@@ -1034,6 +1033,23 @@ int main(int argc, char *argv[])
         mdb_vol = 2000.0 * log((float)(ch[0]-'A')/10);
         m_player_audio.SetCurrentVolume(mdb_vol);
         printf("Current Volume: %.2fdB\n", m_player_audio.GetCurrentVolume() / 100.0f);
+        break;
+      case '?':
+        // returns the following information on stdout :
+        // - media duration in ms
+        // - playing position in ms
+        // - state (0 : paused, 1 : playing)
+        // - volume in millibels
+        // - amplitude in percent
+        // - muted (0 : not muted, 1 : muted)
+        printf("duration:%d,pos:%d,state:%d,volume:%ld,amplitude:%d,muted:%d\n",
+            m_omx_reader.GetStreamLength(),
+            (int)m_av_clock->OMXMediaTime()/1000,
+            !m_Pause,
+            m_player_audio.GetCurrentVolume(),
+            (int)(100*pow(10, m_player_audio.GetCurrentVolume() / 2000.0)),
+            m_player_audio.GetMute()
+            );
         break;
       default:
         break;

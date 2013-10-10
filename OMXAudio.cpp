@@ -738,6 +738,12 @@ void COMXAudio::Mute(bool bMute)
 }
 
 //***********************************************************************************************
+bool COMXAudio::GetMute()
+{
+  return (m_LastVolume != m_CurrentVolume && m_CurrentVolume == VOLUME_MINIMUM);
+}
+
+//***********************************************************************************************
 bool COMXAudio::SetCurrentVolume(long nVolume)
 {
   if(!m_Initialized || m_Passthrough)

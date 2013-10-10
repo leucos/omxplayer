@@ -75,6 +75,7 @@ public:
 
   long GetCurrentVolume() const;
   void Mute(bool bMute);
+  bool GetMute();
   bool SetCurrentVolume(long nVolume);
   void SetDynamicRangeCompression(long drc) { m_drc = drc; }
   int SetPlaySpeed(int iSpeed);
